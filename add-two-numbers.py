@@ -10,9 +10,6 @@ class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
-    
-    def __str__(self):
-        return "{}".format(self.val)
 
 # Input: l1 = [2,4,3], l2 = [5,6,4]
 # Output: [7,0,8]
@@ -20,21 +17,26 @@ class ListNode:
 
 class Solution:
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
-        if l1 or l2:
-            val = (l1.val if l1 else 0) + (l2.val if l2 else 0)
+            def fn(_l1: ListNode, _l2: ListNode, _carry: int = 0) -> ListNode:
+                if _l1 or _l2:
+                    val = (_l1.val if l1 else 0) + (_l2.val if _l2 else 0) + _carry
+                    carry = val // 10
+                    rest = val % 10
 
-            if (l1 and l1.next) or (l2 and l2.next):
-                return ListNode(val, self.addTwoNumbers(l1.next if l1 else None, l2.next if l2 else None))
-            else:
-                return ListNode(val, None)
+                    if (_l1 and _l1.next) or (_l2 and _l2.next):
+                        return ListNode(rest, fn(_l1.next if _l1 else None, _l2.next if _l2 else None, carry))
+                    else:
+                        return ListNode(rest, None)
 
-        else:
-            return None
+                else:
+                    return None
+            
+            return fn(l1, l2)
 
 
-res = Solution().addTwoNumbers(ListNode(1, ListNode(2, None)), ListNode(2, None))
+res = Solution().addTwoNumbers(ListNode(2, ListNode(4, ListNode(3, None))), ListNode(5, ListNode(6, ListNode(4, None))))
 
 cur = res
 while cur:
-    print(cur)
+    print(cur.val)
     cur = cur.next
