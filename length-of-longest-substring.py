@@ -26,4 +26,34 @@
 
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        pass
+        result = 0
+        
+        if len(s) == 0:
+            return result
+
+        def isUniq(str: str) -> bool:
+            return len(set(str)) == len(str)
+        
+        for i in range(len(s) + 1):
+            for k in range(i + 1, len(s) + 1):
+                substr = s[i:k]
+                substr_len = len(substr)
+
+                if isUniq(substr):
+                    result = result if substr_len < result else substr_len
+
+
+        return result
+
+
+def test_answer():
+    assert Solution().lengthOfLongestSubstring("qwerty") == 6
+    assert Solution().lengthOfLongestSubstring("abcabcbb") == 3
+    assert Solution().lengthOfLongestSubstring("bbbbb") == 1
+    assert Solution().lengthOfLongestSubstring("pwwkew") == 3
+    assert Solution().lengthOfLongestSubstring("") == 0
+    assert Solution().lengthOfLongestSubstring("  qw") == 3
+    assert Solution().lengthOfLongestSubstring("q w e r") == 3
+
+
+test_answer()
