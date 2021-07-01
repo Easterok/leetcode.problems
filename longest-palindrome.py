@@ -23,4 +23,16 @@
 
 class Solution:
     def longestPalindrome(self, s: str) -> str:
-        pass
+        result = s[0]
+
+        def is_palindrome(str: str) -> bool:
+            return str == str[::-1]
+
+        for i in range(len(s) + 1):
+            for k in range(i + 1, len(s) + 1):
+                substr = s[i:k]
+
+                result = substr if is_palindrome(substr) and len(substr) > len(result) else result
+
+        return result
+
