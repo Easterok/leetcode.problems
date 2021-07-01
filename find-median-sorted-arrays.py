@@ -28,4 +28,35 @@ from typing import List
 
 class Solution:
     def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
-        
+        x = len(nums1)
+        y = len(nums2)
+
+        if (x > y):
+            return self.findMedianSortedArrays(nums2, nums1)
+
+        start = 0
+        end = x
+
+        while start <= end:
+            partX = (start + end) // 2
+            partY = (x + y + 1) // 2 - partX
+
+            maxLeftX = float('-inf') if partX == 0 else nums1[partX - 1]
+            minRightX = float('inf') if partX == x else nums1[partX]
+
+            maxLeftY = float('-inf') if partY == 0 else nums2[partY - 1]
+            minRightY = float('inf') if partY == y else nums2[partY]
+
+            if maxLeftX <= minRightY and maxLeftY <= minRightX:
+                if (x + y) % 2 == 1:
+                    return max(maxLeftX, maxLeftY)
+                else:
+                    return (max(maxLeftX, maxLeftY) + min(minRightX, minRightY)) / 2
+
+            elif maxLeftX > minRightY:
+                end = partX - 1
+
+            else:
+                start = partX + 1
+
+Solution().findMedianSortedArrays([1, 2], [3, 4])
