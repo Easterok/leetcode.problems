@@ -98,13 +98,13 @@ class Solution:
         return max(min(x, _max), _min)
 
     def myAtoi(self, s: str) -> int:
-        match = re.match(r'^[-+]?\d+', s.replace(' ', ''))
+        match = re.match(r'^ *[-+]?\d+', s)
 
         if match is None:
             return 0
 
         high_boundary = pow(2, 31) - 1
-        low_boundary = -high_boundary + 1
-        result = int(match.group(0))
+        low_boundary = -(high_boundary + 1)
+        result = int(match.group(0).replace(' ', ''))
 
         return self.clamp(result, low_boundary, high_boundary)
