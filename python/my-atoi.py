@@ -91,6 +91,20 @@
 # 0 <= s.length <= 200
 # s consists of English letters (lower-case and upper-case), digits (0-9), ' ', '+', '-', and '.'.
 
+import re
+
 class Solution:
+    def clamp(self, x: int, _min: int, _max: int) -> int:
+        return max(min(x, _max), _min)
+
     def myAtoi(self, s: str) -> int:
-        pass
+        match = re.match(r'^[-+]?\d+', s.replace(' ', ''))
+
+        if match is None:
+            return 0
+
+        high_boundary = pow(2, 31) - 1
+        low_boundary = -high_boundary + 1
+        result = int(match.group(0))
+
+        return self.clamp(result, low_boundary, high_boundary)
