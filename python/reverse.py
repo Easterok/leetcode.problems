@@ -24,14 +24,16 @@
 
 class Solution:
     def reverse(self, x: int) -> int:
-        low_boundary = -0x80000000
-        hight_boundary = 0x7fffffff
+        hight_boundary = pow(2, 31)
+        low_boundary = -(hight_boundary - 1)
 
-        if x > 0:
+        if x >= 0:
             reversed_x = int(str(x)[::-1])
 
-            return reversed_x if reversed_x & hight_boundary != hight_boundary else 0
+            return 0 if reversed_x > hight_boundary else reversed_x
         else:
             reversed_x = -int(str(x)[::-1][:-1])
 
-            return reversed_x if reversed_x & low_boundary != low_boundary else 0
+            return 0 if reversed_x < low_boundary else reversed_x
+
+Solution().reverse(0)
