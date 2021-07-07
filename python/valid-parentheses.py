@@ -45,12 +45,7 @@ class Solution:
             if not close is None:
                 closed.append(close)
             else:
-                if len(closed) == 0:
+                if len(closed) == 0 or closed.pop(-1) != str:
                     return False
 
-                q = closed.pop(-1)
-
-                if str != q:
-                    return False
-        
         return len(closed) == 0
