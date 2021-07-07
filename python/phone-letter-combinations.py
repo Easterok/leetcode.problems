@@ -25,4 +25,34 @@ from typing import List
 
 class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
-        pass
+        buttons = {
+            '2': ['a', 'b', 'c'],
+            '3': ['d', 'e', 'f'],
+            '4': ['g', 'h', 'i'],
+            '5': ['j', 'k', 'l'],
+            '6': ['m', 'n', 'o'],
+            '7': ['p', 'q', 'r', 's'],
+            '8': ['t', 'u', 'v'],
+            '9': ['w', 'x', 'y', 'z']
+        }
+
+        if len(digits) == 0:
+            return ""
+
+        press_on = list(map(lambda x: buttons.get(x), list(digits)))
+
+        def combine(arr):
+            if len(arr) == 1 or len(arr[1]) == 0:
+                return arr[0]
+
+            result = []
+
+            for i in arr[0]:
+                for k in arr[1]:
+                    result.append(i + k)
+
+            return combine([result] + arr[2:])
+
+        return combine(press_on)
+            
+Solution().letterCombinations("234")
