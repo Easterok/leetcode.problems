@@ -31,6 +31,25 @@
 
 from typing import List
 
+# brutal solution
 class Solution:
     def maxArea(self, height: List[int]) -> int:
-        pass
+        result = 0
+        temp_higher_value = height[0]
+
+        for index in range(len(height) - 1):
+
+            if height[index] < temp_higher_value:
+                continue
+
+            for m in range(len(height) - 1, index, -1):
+                c = min(height[index], height[m])
+
+                temp_result = (m - index) * c
+
+                if temp_result > result:
+                    temp_higher_value = c
+                    result = temp_result
+
+        return result
+
