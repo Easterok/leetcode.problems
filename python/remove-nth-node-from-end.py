@@ -28,27 +28,48 @@ class ListNode:
         self.val = val
         self.next = next
 
+# class Solution:
+#     def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
+#         current = head
+#         count = 0
+
+#         while current:
+#             count += 1
+#             current = current.next
+        
+#         prev_deleted_guy = None
+#         guy_to_delete = head
+
+#         while count != n:
+#             count -= 1
+#             prev_deleted_guy = guy_to_delete
+#             guy_to_delete = guy_to_delete.next
+
+        
+#         if prev_deleted_guy is None:
+#             return guy_to_delete.next
+#         else:
+#             prev_deleted_guy.next = guy_to_delete.next
+
+#         return head
+
+# 2 pointer solution
 class Solution:
     def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
-        current = head
-        count = 0
+        node = ListNode(0)
+        node.next = head
+        first = node
+        second = node
 
-        while current:
-            count += 1
-            current = current.next
+        for i in range(n + 1):
+            first = first.next
         
-        prev_deleted_guy = None
-        guy_to_delete = head
-
-        while count != n:
-            count -= 1
-            prev_deleted_guy = guy_to_delete
-            guy_to_delete = guy_to_delete.next
-
+        while not first is None:
+            first = first.next
+            second = second.next
         
-        if prev_deleted_guy is None:
-            return guy_to_delete.next
-        else:
-            prev_deleted_guy.next = guy_to_delete.next
+        second.next = second.next.next
 
-        return head
+        return node.next
+
+Solution().removeNthFromEnd(ListNode(1, ListNode(2, ListNode(3, ListNode(4)))), 2)
