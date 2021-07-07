@@ -32,24 +32,42 @@
 from typing import List
 
 # brutal solution
+# class Solution:
+#     def maxArea(self, height: List[int]) -> int:
+#         result = 0
+#         temp_higher_value = height[0]
+
+#         for index in range(len(height) - 1):
+
+#             if height[index] < temp_higher_value:
+#                 continue
+
+#             for m in range(len(height) - 1, index, -1):
+#                 c = min(height[index], height[m])
+
+#                 temp_result = (m - index) * c
+
+#                 if temp_result > result:
+#                     temp_higher_value = c
+#                     result = temp_result
+
+#         return result
+
 class Solution:
     def maxArea(self, height: List[int]) -> int:
         result = 0
-        temp_higher_value = height[0]
+        left_pointer = 0
+        right_pointer = len(height) - 1
 
-        for index in range(len(height) - 1):
+        while left_pointer < right_pointer:
+            l_h = height[left_pointer]
+            r_h = height[right_pointer]
 
-            if height[index] < temp_higher_value:
-                continue
+            result = max((right_pointer - left_pointer) * min(l_h, r_h), result)
 
-            for m in range(len(height) - 1, index, -1):
-                c = min(height[index], height[m])
-
-                temp_result = (m - index) * c
-
-                if temp_result > result:
-                    temp_higher_value = c
-                    result = temp_result
+            if l_h < r_h:
+                left_pointer += 1
+            else:
+                right_pointer -= 1
 
         return result
-
