@@ -26,4 +26,40 @@ class ListNode:
 
 class Solution:
     def swapPairs(self, head: ListNode) -> ListNode:
-        pass
+        if head is None:
+            return None
+        
+        if head.next is None:
+            return head
+
+        guy = ListNode()
+        guy.next = head
+
+        first_pointer = head.next
+        second_pointer = guy
+
+        while not first_pointer is None:
+            temp_first = first_pointer.next
+            first_pointer.next = second_pointer.next
+            temp_second = second_pointer.next
+            second_pointer.next.next = temp_first
+            second_pointer.next = first_pointer
+
+            if temp_first is None:
+                break
+
+            first_pointer = temp_first.next
+            second_pointer = temp_second
+
+        return guy.next
+            
+        
+
+q = Solution().swapPairs(
+    ListNode(1, ListNode(2, ListNode(3, ListNode(4))))
+)
+
+curr = q
+while curr:
+    print(curr.val)
+    curr = curr.next
