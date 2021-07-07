@@ -32,4 +32,25 @@
 
 class Solution:
     def isValid(self, s: str) -> bool:
-        pass
+        m = {
+            '{': '}',
+            '[': ']',
+            '(': ')'
+        }
+        closed = []
+
+        for str in s:
+            close = m.get(str)
+
+            if not close is None:
+                closed.append(close)
+            else:
+                if len(closed) == 0:
+                    return False
+
+                q = closed.pop(-1)
+
+                if str != q:
+                    return False
+        
+        return len(closed) == 0
