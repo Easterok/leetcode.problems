@@ -22,4 +22,23 @@ from typing import List
 
 class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
-        pass
+        def rec(index) -> str:
+            rec_res = True
+
+            if len(strs[0]) == index:
+                return ""
+
+            for str in range(1, len(strs)):
+                if len(strs[str]) == index:
+                    return ""
+                
+                rec_res = rec_res and strs[str][index] == strs[0][index]
+
+            if rec_res:
+                return strs[0][index] + rec(index + 1)
+            else:
+                return ""
+
+        return rec(0)
+
+Solution().longestCommonPrefix(["flower","flow","flight"])
