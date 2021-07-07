@@ -40,6 +40,45 @@ class ListNode:
 
 from typing import List
 
+# time issues
 class Solution:
     def mergeKLists(self, lists: List[ListNode]) -> ListNode:
-        pass
+        filtered_lists = list(filter(lambda x: not x is None, lists))
+
+        def fn(list):
+            if len(list) == 0:
+                return None
+
+            if len(list) == 1:
+                return list[0]
+
+            def min_value_node(nodes: List[ListNode]) -> int:
+                elem = 0
+
+                for index in range(1, len(nodes)):
+                    val = nodes[index].val
+
+                    if val < nodes[elem].val:
+                        elem = index
+                
+                return elem
+            
+            min_value_index = min_value_node(list)
+            min_elem = list[min_value_index]
+
+            if min_elem.next is None:
+                list.pop(min_value_index)
+            else:
+                list[min_value_index] = list[min_value_index].next
+
+            min_elem.next = self.mergeKLists(list)
+
+            return min_elem
+        
+        return fn(filtered_lists)
+
+Solution().mergeKLists(
+    [
+        ListNode(2), None, ListNode(1)
+    ]
+)
