@@ -52,14 +52,3 @@ class Solution:
             second_pointer = temp_second
 
         return guy.next
-            
-        
-
-q = Solution().swapPairs(
-    ListNode(1, ListNode(2, ListNode(3, ListNode(4))))
-)
-
-curr = q
-while curr:
-    print(curr.val)
-    curr = curr.next
