@@ -47,4 +47,20 @@
 
 class Solution:
     def romanToInt(self, s: str) -> int:
-        pass
+        romans = {'M': 1000, 'CM': 900, 'D': 500, 'CD': 400, 'C': 100, 'XC': 90, 'L': 50, 'XL': 40, 'X': 10, 'IX': 9, 'V': 5, 'IV': 4, 'I': 1}
+        
+        def rec(str: str) -> int:
+            if len(str) > 0:
+                combined = str[:2]
+                value = romans.get(combined)
+
+                if value:
+                    return value + rec(str[2:])
+                else:
+                    return romans.get(str[0]) + rec(str[1:])
+            
+            return 0
+        
+        return rec(s)
+
+Solution().romanToInt('MCMXCIV')
