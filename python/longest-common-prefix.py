@@ -20,25 +20,55 @@
 
 from typing import List
 
+# recursive solution
+# class Solution:
+#     def longestCommonPrefix(self, strs: List[str]) -> str:
+#         def rec(index) -> str:
+#             rec_res = True
+
+#             if len(strs[0]) == index:
+#                 return ""
+
+#             for str in range(1, len(strs)):
+#                 if len(strs[str]) == index:
+#                     return ""
+                
+#                 rec_res = rec_res and strs[str][index] == strs[0][index]
+
+#             if rec_res:
+#                 return strs[0][index] + rec(index + 1)
+#             else:
+#                 return ""
+
+#         return rec(0)
+
+# binary search solution
+
 class Solution:
     def longestCommonPrefix(self, strs: List[str]) -> str:
-        def rec(index) -> str:
-            rec_res = True
+        min_length = 200
 
-            if len(strs[0]) == index:
-                return ""
+        for str in strs:
+            min_length = min(min_length, len(str))
+        
+        low = 1
+        hight = min_length
+        
+        def is_common_prefix(middle: int) -> bool:
+            str1 = strs[0][:middle]
 
-            for str in range(1, len(strs)):
-                if len(strs[str]) == index:
-                    return ""
-                
-                rec_res = rec_res and strs[str][index] == strs[0][index]
+            for i in range(1, len(strs)):
+                if not strs[i].startswith(str1):
+                    return False
+            
+            return True
 
-            if rec_res:
-                return strs[0][index] + rec(index + 1)
+        while low <= hight:
+            middle = (hight + low) // 2
+
+            if is_common_prefix(middle):
+                low = middle + 1
             else:
-                return ""
-
-        return rec(0)
-
-Solution().longestCommonPrefix(["flower","flow","flight"])
+                hight = middle - 1
+        
+        return strs[0][:(low + hight) // 2]
