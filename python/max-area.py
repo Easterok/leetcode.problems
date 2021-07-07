@@ -31,7 +31,7 @@
 
 from typing import List
 
-# brutal solution
+# brutal solution O(n^2)
 # class Solution:
 #     def maxArea(self, height: List[int]) -> int:
 #         result = 0
@@ -53,6 +53,7 @@ from typing import List
 
 #         return result
 
+# O(n)
 class Solution:
     def maxArea(self, height: List[int]) -> int:
         result = 0
