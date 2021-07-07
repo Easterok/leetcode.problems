@@ -41,44 +41,69 @@ class ListNode:
 from typing import List
 
 # time issues
-class Solution:
-    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
-        filtered_lists = list(filter(lambda x: not x is None, lists))
+# class Solution:
+#     def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+#         filtered_lists = list(filter(lambda x: not x is None, lists))
 
-        def fn(list):
-            if len(list) == 0:
-                return None
+#         def fn(list):
+#             if len(list) == 0:
+#                 return None
 
-            if len(list) == 1:
-                return list[0]
+#             if len(list) == 1:
+#                 return list[0]
 
-            def min_value_node(nodes: List[ListNode]) -> int:
-                elem = 0
+#             def min_value_node(nodes: List[ListNode]) -> int:
+#                 elem = 0
 
-                for index in range(1, len(nodes)):
-                    val = nodes[index].val
+#                 for index in range(1, len(nodes)):
+#                     val = nodes[index].val
 
-                    if val < nodes[elem].val:
-                        elem = index
+#                     if val < nodes[elem].val:
+#                         elem = index
                 
-                return elem
+#                 return elem
             
-            min_value_index = min_value_node(list)
-            min_elem = list[min_value_index]
+#             min_value_index = min_value_node(list)
+#             min_elem = list[min_value_index]
 
-            if min_elem.next is None:
-                list.pop(min_value_index)
-            else:
-                list[min_value_index] = list[min_value_index].next
+#             if min_elem.next is None:
+#                 list.pop(min_value_index)
+#             else:
+#                 list[min_value_index] = list[min_value_index].next
 
-            min_elem.next = self.mergeKLists(list)
+#             min_elem.next = self.mergeKLists(list)
 
-            return min_elem
+#             return min_elem
         
-        return fn(filtered_lists)
+#         return fn(filtered_lists)
 
-Solution().mergeKLists(
-    [
-        ListNode(2), None, ListNode(1)
-    ]
-)
+class Solution:
+    def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
+        if l1 is None:
+            return l2
+        
+        if l2 is None:
+            return l1
+        
+        if l1.val < l2.val:
+            l1.next = self.mergeTwoLists(l1.next, l2)
+
+            return l1
+        else:
+            l2.next = self.mergeTwoLists(l1, l2.next)
+
+            return l2
+
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        if not lists:
+            return None
+        
+        if len(lists) == 1:
+            return lists[0]
+        
+        mid = len(lists) // 2
+
+        left = self.mergeKLists(lists[:mid])
+        right = self.mergeKLists(lists[mid:])
+
+        return self.mergeTwoLists(left, right)
