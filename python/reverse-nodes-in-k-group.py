@@ -39,5 +39,46 @@ class ListNode:
         self.next = next
 
 class Solution:
+    def reverse(self, head: ListNode) -> ListNode:
+        prev = None
+        pointer = head
+
+        while pointer:
+            temp_next = pointer.next
+            pointer.next = prev
+            prev = pointer
+            pointer = temp_next
+
+        return prev
+
     def reverseKGroup(self, head: ListNode, k: int) -> ListNode:
-        pass
+        if k == 1:
+            return head
+
+        def reverseGroup(node: ListNode) -> ListNode:
+            first_pointer = node
+            second_pointer = node
+
+            i = 1
+
+            while first_pointer and i < k:
+                first_pointer = first_pointer.next
+                i += 1
+
+            if first_pointer is None:
+                return node
+
+            temp_first_pointer_next = first_pointer.next
+
+            first_pointer.next = None
+
+            new_head = self.reverse(second_pointer)
+
+            if temp_first_pointer_next is None:
+                return new_head
+
+            second_pointer.next = reverseGroup(temp_first_pointer_next)
+
+            return new_head
+
+        return reverseGroup(head)
