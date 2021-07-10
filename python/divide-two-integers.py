@@ -32,5 +32,29 @@
 # divisor != 0
 
 class Solution:
+    def clamp(self, val: int) -> int:
+        return max(-2147483648, min(val, 2147483647))
+
     def divide(self, dividend: int, divisor: int) -> int:
-        pass
+        # 7
+        abs_a = abs(dividend)
+        # 3
+        abs_b = abs(divisor)
+        # True
+        sign = (dividend < 0) == (divisor < 0)
+
+        result = 0
+
+        while abs_a >= abs_b:
+            temp = abs_b
+            i = 1
+
+            while abs_a >= temp:
+                abs_a -= temp
+                result += i
+                i <<= 1
+                temp <<= 1
+
+        return self.clamp(result if sign else -result)
+        
+Solution().divide(7, 3)
