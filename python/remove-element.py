@@ -43,6 +43,21 @@
 # 0 <= nums[i] <= 50
 # 0 <= val <= 100
 
+from typing import List
+
 class Solution:
     def removeElement(self, nums: List[int], val: int) -> int:
-        pass
+        if len(nums) == 0:
+            return 0
+        
+        index = len(nums)
+        i = 0
+
+        while i < index:
+            if nums[i] == val:
+                nums[i] = nums[index - 1]
+                index -= 1
+            else:
+                i += 1
+
+        return index
