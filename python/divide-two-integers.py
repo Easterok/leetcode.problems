@@ -36,11 +36,8 @@ class Solution:
         return max(-2147483648, min(val, 2147483647))
 
     def divide(self, dividend: int, divisor: int) -> int:
-        # 7
         abs_a = abs(dividend)
-        # 3
         abs_b = abs(divisor)
-        # True
         sign = (dividend < 0) == (divisor < 0)
 
         result = 0
