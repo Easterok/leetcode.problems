@@ -30,4 +30,16 @@
 
 class Solution:
     def strStr(self, haystack: str, needle: str) -> int:
-        pass
+        if len(needle) == 0:
+            return 0
+        
+        if len(haystack) < len(needle):
+            return -1
+        
+        for index in range(0, len(haystack) - len(needle) + 1):
+            substr = haystack[index:(index + len(needle))]
+
+            if substr == needle:
+                return index
+        
+        return -1
