@@ -24,4 +24,11 @@ from typing import List
 
 class Solution:
     def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
-        pass
+        if len(nums) < 4:
+            return []
+        
+        nums = sorted(nums)
+
+        for i in range(len(nums) - 3):
+            pass
+        
